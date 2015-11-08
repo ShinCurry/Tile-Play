@@ -1,0 +1,15 @@
+{
+  "name": "tile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ShinCurry",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.3",
+    "sqlite3": "^3.1.1"
+  }
+}
