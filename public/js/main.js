@@ -5,11 +5,11 @@ var tiles = (function() {
 	jsonhttp.onreadystatechange = function() {
 		if (jsonhttp.readyState == 4 && jsonhttp.status == 200) {
 			tiles = JSON.parse(jsonhttp.response);
-			// console.log(tiles);
 			for (var i = 0; i < tiles.column * tiles.row; i++) {
-				document.getElementById("background").innerHTML += "<div class='tile " + tiles.color[i] + "' id='" + i + "' onclick='clicked(this.id)'></div>";
+				document.getElementById("background").innerHTML += '<div class="tile ' + tiles.color[i] + '" id="' + i + '" onclick="clicked(this.id)"></div>';
 			}
-			return tiles;
+			document.getElementById("template-color").innerHTML = '<div class="tile ' + tiles.currentColor + '" id="template-tile" onclick="clicked(this.id)"></div>';
+
 		}
 	}
 })();
@@ -36,17 +36,19 @@ function clicked(id) {
 function saveData() {
 	var http = new XMLHttpRequest();
 	http.open("POST", "/saveData/", true);
+	http.setRequestHeader('Content-type', 'application/json');
+	http.send(JSON.stringify(tiles));
+	console.log(JSON.stringify(tiles));
 	http.onreadystatechange = function() {
 		if (http.readyState == 4 && http.status == 200) {
+			alert("保存成功");
 			console.log("save data message" + http.response);
 			document.getElementById("button-save").innerHTML = "Saved";
 			setTimeout(function() {
 				document.getElementById("button-save").innerHTML = "Save";
-			}, 5000);
+			}, 2000);
 		}
 	}
-	console.log(JSON.stringify(tiles));
-	http.send("tiles="+JSON.stringify(tiles)); // Problem ##
 }
 
 function setColor(id) {
@@ -58,4 +60,5 @@ function setColor(id) {
 	} else if (id == "button-white") {
 		tiles.currentColor = "white";
 	}
+	document.getElementById("template-tile").className = "tile " + tiles.currentColor;
 }

@@ -1,7 +1,7 @@
 {
   "name": "tile",
   "version": "1.0.0",
-  "description": "",
+  "description": "Tile Play (´・ω・`)",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
@@ -9,6 +9,7 @@
   "author": "ShinCurry",
   "license": "GPL",
   "dependencies": {
+    "body-parser": "^1.14.1",
     "express": "^4.13.3",
     "sqlite3": "^3.1.1"
   }

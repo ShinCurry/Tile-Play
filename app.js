@@ -1,67 +1,44 @@
-var fs = require("fs");
-var express = require('express'); 
+var express = require('express');
+var bodyParser = require('body-parser');
 var sqlite3 = require("sqlite3").verbose();
 
 var app = express();
+var config = require('./config.js');
 
-// config
-var config = {
-	username : "admin",
-	password : "admin",
-	row : 7,
-	column : 12
-};
-
-// init database 
-var originalFile = "tiles.original.db";
-var file = "tiles.db";
-var exists = fs.existsSync(file);
-if (!exists) {
-	fs.rename(originalFile, file, function(err) {
-		if (err) {
-			console.log(err);
-		}
-	});
-	var db = new sqlite3.Database(file);
-	db.serialize(function() {
-		// db.run("CREATE TABLE tiles (id integer  PRIMARY KEY DEFAULT NULL,color Varchar(100) DEFAULT NULL)");
-		// db.run("CREATE TABLE settings (name Varchar(40)  PRIMARY KEY DEFAULT NULL,value INTEGER DEFAULT NULL)");
-		// db.run("CREATE TABLE admin (username Varchar(40)  PRIMARY KEY DEFAULT NULL,password Varchar(40) DEFAULT NULL)");
-		for (var i = 0; i < config.column * config.row; i++) {
-			db.run('INSERT INTO tiles VALUES (' + i + ',"gray")');
-		}
-		db.run('INSERT INTO settings VALUES ("row",' + config.row + ')');
-		db.run('INSERT INTO settings VALUES ("column",' + config.column + ')');
-		db.run('INSERT INTO admin VALUES ("' + config.username + '","' + config.password + '")');
-	});
-	db.close();
-	
-}
-
-function setDataToDB(t) {
-	// var db = new sqlite3.Database(file);
-}
-
-var tiles = (function getDataFromDB() {
-	var t = {
-		row : 0,
-		column : 0,
-		color : [],
-		currentColor : "red"
-	};
-	var db = new sqlite3.Database(file);
-	db.each("SELECT * FROM tiles", function(err, row) {
-		t.color[row.id] = row.color;
-	});
-	db.each("SELECT * FROM settings", function(err, row) {
-		t[row.name] = row.value;
-	});
-	db.close();
+function initTiles() {
+	var t = { row: 7, column: 12, color: [], currentColor: "red" }
+	for (var i = 0; i < t.row * t.column; i++) {
+		t.color[i] = "gray";
+	}
 	return t;
-})();
+}
+
+var tiles;
+getDataFromDB();
+
+// database setter and getter
+function getDataFromDB() {
+	var db = new sqlite3.Database(config.dbName);
+	db.serialize(function() {
+		db.each("SELECT * FROM tileground", function(err, row) {
+			if (row.name == "original") tiles = JSON.parse(unescape(row.data));
+		});
+	});
+	db.close();
+}
+function setDataToDB(t) {
+	var db = new sqlite3.Database(config.dbName);
+	db.serialize(function() {
+		db.run('UPDATE tileground SET data="' + escape(JSON.stringify(t)) + '" WHERE name="original"');
+		tiles = t;
+	});
+	db.close();
+}
 
 
-// 临时设值
+// BodyParser 中间件
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 
 // 静态文件
@@ -74,18 +51,18 @@ app.get('/', function(req, res) {
 
 // API
 app.get('/getData', function(req, res) {
-
 	res.json(tiles);
 });
 
 app.post('/saveData/', function(req, res) {
-	res.send("not ok");
+	setDataToDB(req.body);
+	res.send("ok");
 });
 app.post('/login', function(req, res) {
 	// res.cookie()
 });
 
 // 端口设置
-app.listen(3000, '127.0.0.1', function() {
-	console.log("app run in http://127.0.0.1:3000");
+app.listen(config.port, config.url, function() {
+	console.log("app run in " + config.url + ":" + config.port);
 });
