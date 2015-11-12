@@ -16,7 +16,7 @@ body {
 	width: 60px;
 	height: 60px;
 	margin: 10px;
-	display: inline-block;	
+	display: inline-block;
 }
 
 .gray {
@@ -35,7 +35,7 @@ body {
 	background-color: white;
 }
 
-.toolbar {
+#toolbar {
 	margin: 10px auto 0 auto;
 }
 
@@ -79,9 +79,13 @@ body {
 	vertical-align: middle;
 }
 
-.toolbar a {
+#toolbar a {
 	text-decoration: none;
 	color: black;
+}
+
+#admin {
+	margin: 10px;
 }
 
 .footer {
