@@ -1,6 +1,8 @@
 var isLogin = false;
-
+var currentColor = "red";
 var tiles;
+var star;
+var contributor
 
 (function() {
 	var jsonhttp = new XMLHttpRequest();
@@ -10,12 +12,16 @@ var tiles;
 		if (jsonhttp.readyState == 4 && jsonhttp.status == 200) {
 			data = JSON.parse(jsonhttp.response);
 			isLogin = data.isLogin;
+			star = data.tiles.star;
+			document.getElementById("star").innerHTML = star;
+			contributor = data.tiles.contributor;
+			document.getElementById("contributor").innerHTML = contributor;
 			tiles = data.tiles;
 			console.log(tiles);
 			for (var i = 0; i < tiles.column * tiles.row; i++) {
 				document.getElementById("background").innerHTML += '<div class="tile ' + tiles.color[i] + '" id="' + i + '" onclick="clicked(this.id)"></div>';
 			}
-			document.getElementById("template-color").innerHTML = '<div class="tile ' + tiles.currentColor + '" id="template-tile" onclick="clicked(this.id)"></div>';
+			document.getElementById("template-color").innerHTML = '<div class="tile ' + currentColor + '" id="template-tile"></div>';
 			if (isLogin) {
 				adminMode();
 			} else {
@@ -30,17 +36,17 @@ document.getElementById("build-tileground").innerHTML = "";
 function clicked(id) {
 	if (!isLogin) return;
 	var tile = document.getElementById(id);
-	if (tiles.currentColor == tiles.color[id]) {
+	if (currentColor == tiles.color[id]) {
 		tile.className = "tile gray";
 		tiles.color[id] = "gray";
 	} else {
-		if (tiles.currentColor == "red") {
+		if (currentColor == "red") {
 			tile.className = "tile red";
 			tiles.color[id] = "red";
-		} else if (tiles.currentColor == "blue") {
+		} else if (currentColor == "blue") {
 			tile.className = "tile blue";
 			tiles.color[id] = "blue";
-		} else if (tiles.currentColor == "white") {
+		} else if (currentColor == "white") {
 			tile.className = "tile white";
 			tiles.color[id] = "white";
 		}
@@ -72,13 +78,13 @@ function setColor(id) {
 	if (!isLogin) return;
 	console.log(id);
 	if (id == "button-red") {
-		tiles.currentColor = "red";
+		currentColor = "red";
 	} else if (id == "button-blue") {
-		tiles.currentColor = "blue";
+		currentColor = "blue";
 	} else if (id == "button-white") {
-		tiles.currentColor = "white";
+		currentColor = "white";
 	}
-	document.getElementById("template-tile").className = "tile " + tiles.currentColor;
+	document.getElementById("template-tile").className = "tile " + currentColor;
 }
 
 function login() {
