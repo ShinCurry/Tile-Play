@@ -20,7 +20,7 @@ var config = {
 	},
 	// Session Settings
 	session : {
-		secret : 'shin123',
+		secret : 'tileplay',
 		name : 'connect.sid'
 	}
 };

@@ -6,6 +6,18 @@ Tile Play is a web app that can show some (interesting) infomation.
 
 The first version completed.
 
+
+
+## Installation
+
+```
+$ git clone https://github.com/ShinCurry/Tile-Play.git
+$ cd Tile-Play
+$ cp config.example.js config.js
+$ vi config.js
+$ npm install
+```
+
 ## Configuration
 
 ```
@@ -16,15 +28,11 @@ var config = {
 
 ```
 
-## Installation
+## Usage
 
 ```
-$ git clone https://github.com/ShinCurry/Tile-Play.git
-$ cd Tile-Play
-$ npm install
 $ npm start
 ```
-
 
 `Tile Play` made in Node.js
 

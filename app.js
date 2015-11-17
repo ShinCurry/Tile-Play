@@ -6,11 +6,9 @@ var cookieParser = require("cookie-parser");
 
 var app = express();
 config = require('./config.js');
-
 var init = require('./init.js');
-var db = new sqlite3.Database(config.dbName);
+var db = new sqlite3.Database(config.database.dbName);
 
-// 数据载入内存
 var data = {
 	isLogin : false,
 	tiles : {}
@@ -29,7 +27,7 @@ function getDataFromDB() {
 	});
 }
 function setDataToDB(t) {
-	var db = new sqlite3.Database(config.dbName);
+	var db = new sqlite3.Database(config.database.dbName);
 	db.serialize(function() {
 		db.run('UPDATE tileground SET data="' + escape(JSON.stringify(t)) + '" WHERE name="original"');
 		tiles = t;
@@ -37,23 +35,23 @@ function setDataToDB(t) {
 }
 
 
-// BodyParser 中间件
+// BodyParser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
-	secret : 'shin123',
-	name : 'connect.sid',
+	secret : config.session.secret,
+	name : config.session.secret,
 	cookie : { maxAge : 5 * 60 * 1000 },
 	resave : false,
 	saveUninitialized : true,
 }));
-// 静态文件
+// Static file
 app.use(express.static('public'));
 
 
 
-// 主页面
+// Main page
 app.get('/', function(req, res) {
 	res.sendfile('views/index.html');
 });
@@ -74,7 +72,7 @@ app.post('/saveData/', function(req, res) {
 
 });
 app.post('/login', function(req, res) {
-	if (req.body.username == config.username && req.body.password == config.password) {
+	if (req.body.username == config.admin.username && req.body.password == config.admin.password) {
 		req.session.isLogin = true;
 		res.send("success");
 	} else {
@@ -90,7 +88,6 @@ app.post('/logout', function(req, res) {
 	})
 });
 
-// 端口设置
-app.listen(config.port, config.url, function() {
-	console.log("app run in " + config.url + ":" + config.port);
+app.listen(config.app.port, config.app.url, function() {
+	console.log("app run in " + config.app.url + ":" + config.app.port);
 });

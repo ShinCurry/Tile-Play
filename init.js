@@ -2,8 +2,7 @@ var fs = require("fs");
 var sqlite3 = require("sqlite3").verbose();
 
 var initial = function(callback) {
-
-	// init database
+	// Initial database
 	var file = "tiles.db";
 	var exists = fs.existsSync(file);
 	if (!exists) {
@@ -21,7 +20,7 @@ var initial = function(callback) {
 }
 
 function initTiles() {
-	var t = { row: 7, column: 12, color: [], star: 0, contributor: "ShinCurry", star: 0 }
+	var t = { row: 7, column: 12, color: [], star: 0, contributor: "ShinCurry" }
 	for (var i = 0; i < t.row * t.column; i++) {
 		t.color[i] = "gray";
 	}
