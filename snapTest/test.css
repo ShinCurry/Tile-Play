@@ -1,0 +1,7 @@
+.tile {
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+	top: 50%;
+	left: 50%;
+}
