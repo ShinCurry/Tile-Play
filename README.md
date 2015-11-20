@@ -6,7 +6,10 @@ Tile Play is a web app that can show some (interesting) infomation.
 
 The first version completed.
 
+Second version UI rewrite by Snap.svg
 
+
+Version 0.8.0
 
 ## Installation
 
@@ -39,3 +42,4 @@ $ npm start
 ## Reference
 
 * [Express.js](http://expressjs.com)
+* [Snap.svg](http://snapsvg.io)

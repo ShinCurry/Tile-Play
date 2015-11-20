@@ -22,8 +22,10 @@ var initial = function(callback) {
 function initTiles() {
 	var t = { row: 7, column: 12, color: [], star: 0, contributor: "ShinCurry" }
 	for (var i = 0; i < t.row * t.column; i++) {
-		t.color[i] = "gray";
+		t.color[i] = "black";
 	}
+	console.log("t");
+	console.log(t);
 	return t;
 }
 

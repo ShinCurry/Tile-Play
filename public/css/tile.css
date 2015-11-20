@@ -1,8 +1,8 @@
 body {
 	margin: 0;
 	padding: 0;
-	/*background-color: lightgray;*/
-	background-color: black;
+	background-color: lightgray;
+	/*background-color: black;*/
 	text-align: center;
 	color: gray;
 }
@@ -12,16 +12,16 @@ body {
 	padding: 40px;
 	width: 960px;
 	height: 560px;
-	background-color: black;
+	/*background-color: black;*/
 }
 
 .tile {
-	width: 60px;
-	height: 60px;
-	margin: 10px;
-	display: inline-block;
-	border: 0 solid;
-	
+	width: 80px;
+	height: 80px;
+	/*cursor: pointer;*/
+	top: 50%;
+	left: 50%;
+	display: inline-block;	
 }
 
 .gray {

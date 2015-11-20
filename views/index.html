@@ -10,6 +10,7 @@
 		<link rel="apple-touch-icon" href="">
 
 		<link href="/css/tile.css" rel="stylesheet">
+		<script type="text/javascript" src="./js/snap.svg-min.js"></script>
 	</head>
 	<body>
 		<div id="background"></div>
@@ -18,7 +19,7 @@
 			contributor: <span id="contributor"></span>
 		</div>
 		<div id="toolbar" style="display: none;">
-			<span><button id="button-save" onclick="saveData()">Save</button></span>
+			<span><button id="button-save" onclick="saveButton()">Save</button></span>
 			<span><button id="button-red" onclick="setColor(this.id)"></button></span>
 			<span><button id="button-blue" onclick="setColor(this.id)"></button></span>
 			<span><button id="button-white" onclick="setColor(this.id)"></button></span>
@@ -28,10 +29,10 @@
 			<div id="login" style="display: none;">
 				<span>Username: <input id="username" type="text" name="username"></span>
 				<span>Password: <input id="password" type="password" name="password"></span>
-				<span><button onclick="login()">Login</button></span>
+				<span><button onclick="loginButton()">Login</button></span>
 			</div>
 			<div id="logout" style="display: none;">
-				<span><button onclick="logout()">Logout</button></span>
+				<span><button onclick="logoutButton()">Logout</button></span>
 			</div>
 		</div>
 		<footer class="footer">

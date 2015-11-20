@@ -30,8 +30,8 @@ function setDataToDB(t) {
 	var db = new sqlite3.Database(config.database.dbName);
 	db.serialize(function() {
 		db.run('UPDATE tileground SET data="' + escape(JSON.stringify(t)) + '" WHERE name="original"');
-		tiles = t;
 	});
+
 }
 
 
