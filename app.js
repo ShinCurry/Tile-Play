@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
 	secret : config.session.secret,
-	name : config.session.secret,
+	name : config.session.name,
 	cookie : { maxAge : 5 * 60 * 1000 },
 	resave : false,
 	saveUninitialized : true,
@@ -54,6 +54,7 @@ app.use(express.static('public'));
 // Main page
 app.get('/', function(req, res) {
 	res.sendfile('views/index.html');
+	// res.sendFile(path.join(__dirname, '/views/', 'index1.html'));
 });
 
 // HTTP request API

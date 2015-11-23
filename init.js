@@ -24,8 +24,6 @@ function initTiles() {
 	for (var i = 0; i < t.row * t.column; i++) {
 		t.color[i] = "black";
 	}
-	console.log("t");
-	console.log(t);
 	return t;
 }
 
